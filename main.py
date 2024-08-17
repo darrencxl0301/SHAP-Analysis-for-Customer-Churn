@@ -8,12 +8,15 @@ from sklearn.metrics import classification_report
 import matplotlib.pyplot as plt
 from streamlit_shap import st_shap
 
-# Load the heart failure dataset (assuming it's in the same directory)
-heart_data = pd.read_csv("heart_failure.csv")
+# Load the dataset
+data = pd.read_csv("heart.csv")
 
 # Preprocessing
-X = heart_data.drop("DEATH_EVENT", axis=1)  # Assuming 'DEATH_EVENT' is the target variable
-y = heart_data.DEATH_EVENT
+X = data.drop("HeartDisease", axis=1)
+y = data.HeartDisease
+
+# Encode categorical variables
+X = pd.get_dummies(X, drop_first=True)
 
 # Train-test split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1)
@@ -43,7 +46,7 @@ shap.summary_plot(shap_values, X_test, show=False)
 st.pyplot(fig)
 
 # Summary plot for class 0
-st.subheader("Summary Plot for Class 0")
+st.subheader("Summary Plot for Class 0 (No Heart Disease)")
 fig, ax = plt.subplots()
 shap.summary_plot(shap_values[0], X_test, show=False)
 st.pyplot(fig)
@@ -54,26 +57,31 @@ st.header("Part 2: Individual Input Prediction & Explanation")
 # Input fields for features
 input_data = {}
 for feature in X.columns:
-    input_data[feature] = st.number_input(f"Enter {feature}:", value=X_test[feature].mean())
+    if feature in ['Age', 'RestingBP', 'Cholesterol', 'MaxHR', 'Oldpeak']:
+        input_data[feature] = st.number_input(f"Enter {feature}:", value=float(X_test[feature].mean()))
+    elif feature in ['FastingBS', 'ExerciseAngina_Y']:
+        input_data[feature] = st.selectbox(f"Select {feature}:", [0, 1])
+    else:
+        input_data[feature] = st.selectbox(f"Select {feature}:", X[feature].unique())
 
 # Create a DataFrame from input data
 input_df = pd.DataFrame(input_data, index=[0])
 
 # Make prediction
 prediction = clf.predict(input_df)[0]
-probability = clf.predict_proba(input_df)[0][1]  # Probability of heart failure event
+probability = clf.predict_proba(input_df)[0][1]  # Probability of heart disease
 
 # Display prediction
-st.write(f"**Prediction:** {'Heart Failure Event' if prediction == 1 else 'No Heart Failure Event'}")
-st.write(f"**Heart Failure Probability:** {probability:.2f}")
+st.write(f"**Prediction:** {'Heart Disease' if prediction == 1 else 'No Heart Disease'}")
+st.write(f"**Heart Disease Probability:** {probability:.2f}")
 
 # SHAP explanation for the input
 shap_values_input = explainer.shap_values(input_df)
 
 # Force plot
 st.subheader("Force Plot")
-st_shap(shap.force_plot(explainer.expected_value[0], shap_values_input[0], input_df), height=400, width=1000)
+st_shap(shap.force_plot(explainer.expected_value[1], shap_values_input[1], input_df), height=400, width=1000)
 
 # Decision plot
 st.subheader("Decision Plot")
-st_shap(shap.decision_plot(explainer.expected_value[0], shap_values_input[0], X_test.columns))
+st_shap(shap.decision_plot(explainer.expected_value[1], shap_values_input[1], X_test.columns))

@@ -3,3 +3,4 @@ catboost==0.24
 streamlit==1.37.1
 streamlit-shap==1.0.2
 shap==0.42.0
+catboost>=1.2

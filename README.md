@@ -1,37 +1,27 @@
-# Streamlit Web Application
-The goal is to predict the genre of a song, interactively explore the corresponding SHAP values and locally explain a CatBoost Multi Classification model.
+# Heart Failure Prediction Using XGBoost& Streamlit Web App 💔🩺
+♠ Using a Machine Learning XGboost Classification Model to Predict If The Patient Has Heart Failure or Not From a Features like(Age, Resting Blood Pressure, Cholesterol, Max Heart Rate, Gender, Chest Pain Type, Fasting Blood Sugar, ...)
 
-**Web application made with [Streamlit](https://streamlit.io/), deployed on an AWS EC2 t2.micro instance with Docker**  
-The docker image can be found on [DockerHub](https://hub.docker.com/repository/docker/nfauco/streamlit-shap).  
-The dockerfile used to build the image can be found at the root of this repository.  
+### Web App Link: <a href = "https://heart-failure-prediction-8lygyzhmwy3uctejsac3wj.streamlit.app/" style = "color: tomato">Click Here To Visit Streamlit Web App</a>🥰📊
 
-## Access the Web Application: [~~HERE~~ (not hosted anymore)](http://)  
-![](https://github.com/fauconnier-n/Streamlit-SHAP-Explorer/blob/main/images/MyApp.jpg) 
-*- the sidebar on the left contains fields to input the features of a song and get the corresponding genre predictions outputed by the model*  
-*- the first two plots use the SHAP package to plot the Shapley values and feature importance of the inputed song*  
-*- the third one allows to select two features and a genre to show the corresponding Dependence Plot of the Shapley values of every predictions made on the evaluation dataset*  
+### Kaggle Notebook For Main Steps: <a href = "https://www.kaggle.com/code/muhammadehabmuhammad/heart-failure-prediction-streamlit-app" target="_blank" style = "color: tomato">Click Here To Visit Kaggle Notebbok</a>🥰📊
 
-***
+## Steps To Create The Model
+#### 🩺 Get quick overview 🤩
+#### 🩺 Checking for duplicates and nulls values 🧹
+#### 🩺 Conducting a little data exploration 🧐
+#### 🩺 Asking a couple of questions and getting insight via charts manner
+#### 🩺 Trying more than model (Random Forest, SVM, XGBoost)
+#### 🩺 Choosing a winning model and fitting the data into our model.🚀
+#### 🩺 Testing our model 😉
 
-### The model
-In the **[notebook](https://github.com/fauconnier-n/Streamlit-SHAP-Explorer/blob/main/notebook.ipynb)**, Cross Validation and GridSearch are used for hyperparameters optimization.  
-However, the app isn't running the model offering the best accuracy, but a model trained with way less iterations. It makes the predictions are faster (less trees), and the model is less prone to overfitting.
+<hr>
 
-Best Hyperparameters found (~58% Accuracy):  
-*{'depth': 6,  
- 'iterations': 1000,  
- 'learning_rate': 0.1}*  
- 
-Model used in the app (~54% Accuracy):  
-*{'depth': 6,  
- 'iterations': 50,  
- 'learning_rate': 0.125}*  
+## Build Streamlit Web App
 
-***
+![image](https://github.com/modyehab810/Heart-Failure-Prediction/assets/114261123/2cbb1641-7271-4d8e-828a-960ed392fab6)
 
-### More plots from the notebook for *song genre = EDM*
-![](https://github.com/fauconnier-n/Streamlit-SHAP-Explorer/blob/main/images/beeswarm%20edm.png)  
-*Beeswarm plot for genre = EDM : shows feature importance in every prediction made on the evaluation set*  
+<hr>
 
-![](https://github.com/fauconnier-n/Streamlit-SHAP-Explorer/blob/main/images/dependence_plots.png)  
-*More dependence plots, all accessible one by one on the app*  
+![image](https://github.com/modyehab810/Heart-Failure-Prediction/assets/114261123/ea338423-d2fc-4b37-b266-9bdb11910207)
+
+

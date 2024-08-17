@@ -74,11 +74,11 @@ def getDateFeatures(df, date):
 
 # ----- Loading the key components
 # Loading the base dataframe
-rpath = r"streamlit_src\merged_data.csv"
+rpath = r"merged_data.csv"
 merged_data = load_data(rpath)
 
 # Loading the toolkit
-loaded_toolkit = load_ml_toolkit(r"streamlit_src\ML_toolkit")
+loaded_toolkit = load_ml_toolkit(r"ML_toolkit")
 if "results" not in st.session_state:
     st.session_state["results"] = []
 
@@ -97,7 +97,7 @@ dataset = st.container()
 features_and_output = st.container()
 
 # Icon for the page
-image = Image.open(r"streamlit_src\AI-Sales-Prediction.jpg")
+image = Image.open(r"AI-Sales-Prediction.jpg")
 
 # Instantiating the form to receive inputs from the user
 form = st.form(key="information", clear_on_submit=True)

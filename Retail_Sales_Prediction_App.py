@@ -21,34 +21,21 @@ st.title("Retail Sales Prediction with Machine Learning")
 
 # ---- Importing and creating other key elements items
 # Function to import the Machine Learning toolkit
-@st.cache(allow_output_mutation=True)
+@st.cache_resource
 def load_ml_toolkit(relative_path):
-    """
-    This function loads the ML items/toolkit into this file by taking the relative path to the ML items/toolkit.
-    Args:
-        relative_path (string, optional): It receives the file path to the ML toolkit for loading.
-    Returns:
-        file: It returns the pickle file (which contains the Machine Learning items in this case).
-    """
     with open(relative_path, "rb") as file:
         loaded_object = pickle.load(file)
     return loaded_object
 
-# Function to load the dataset
-@st.cache()
+
+@st.cache_data
 def load_data(relative_path):
-    """
-    This function is used to load the DataFrame into the current file.
-    Args:
-        relative_path (string): The relative path to the DataFrame to be loaded.
-    Returns:
-        DataFrame: Returns the DataFrame at the path provided.
-    """
     merged_data = pd.read_csv(relative_path, index_col=0)
     merged_data["onpromotion"] = merged_data["onpromotion"].apply(int)
     merged_data["store_nbr"] = merged_data["store_nbr"].apply(int)
     merged_data["sales_date"] = pd.to_datetime(merged_data["sales_date"]).dt.date
     return merged_data
+
 
 # Function to get date features from the inputs
 @st.cache()
